@@ -38,7 +38,7 @@ export const CustomTabs = (props: CustomTabsProps) => {
       <Tabs.List className={s.tabsList}>
         {tabs.map(tab => (
           <Tabs.Trigger
-            className={`${s.tabsTriggerDefault} ${tab.disabled ? s.disabled : ''}`}
+            className={`${s.tabsTriggerDefault}`}
             disabled={tab.disabled}
             key={tab.value}
             value={tab.value}
