@@ -24,29 +24,31 @@ export const CustomTabs = (props: CustomTabsProps) => {
   const { children, defaultValue, onValueChange, tabs, tabsName, value } = props
 
   return (
-    <div>
-      <Typography>{tabsName}</Typography>
-      <Tabs.Root
-        className={s.tabsRoot}
-        defaultValue={defaultValue}
-        onValueChange={onValueChange}
-        value={value}
-      >
-        <Tabs.List className={s.tabsList}>
-          {tabs.map(tab => (
-            <Tabs.Trigger
-              className={`${s.tabsTriggerDefault} ${tab.disabled ? s.disabled : ''}`}
-              disabled={tab.disabled}
-              key={tab.value}
-              value={tab.value}
-            >
-              {tab.title}
-            </Tabs.Trigger>
-          ))}
-        </Tabs.List>
-        {children}
-      </Tabs.Root>
-    </div>
+    <Tabs.Root
+      className={s.tabsRoot}
+      defaultValue={defaultValue}
+      onValueChange={onValueChange}
+      value={value}
+    >
+      {tabsName && (
+        <Typography colorBalance={100} colorTheme={'light'} variant={'body2'}>
+          {tabsName}
+        </Typography>
+      )}
+      <Tabs.List className={s.tabsList}>
+        {tabs.map(tab => (
+          <Tabs.Trigger
+            className={`${s.tabsTriggerDefault} ${tab.disabled ? s.disabled : ''}`}
+            disabled={tab.disabled}
+            key={tab.value}
+            value={tab.value}
+          >
+            {tab.title}
+          </Tabs.Trigger>
+        ))}
+      </Tabs.List>
+      {children}
+    </Tabs.Root>
   )
 }
 

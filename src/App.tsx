@@ -13,9 +13,10 @@ export function App() {
       <CustomTabs
         defaultValue={'tab1'}
         tabs={[
-          { title: 'Switcher', value: 'tab1' },
-          { title: 'Switcher', value: 'tab2' },
+          { title: 'My Cards', value: 'tab1' },
+          { title: 'All Cards', value: 'tab2' },
         ]}
+        tabsName={'Show docks cards'}
       >
         <TabsContent value={'tab1'}>
           Onecwcwcdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
