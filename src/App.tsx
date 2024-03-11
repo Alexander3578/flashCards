@@ -1,3 +1,4 @@
+import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Button } from '@/components/ui/button'
 import { CustomTabs, TabsContent } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
@@ -22,6 +23,7 @@ export function App() {
           Onecwcwcdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
         </TabsContent>
         <TabsContent value={'tab2'}>Two</TabsContent>
+        <LoginForm />
       </CustomTabs>
     </div>
   )
