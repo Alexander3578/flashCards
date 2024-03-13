@@ -1,34 +1,37 @@
-import {FieldValues, useController, UseControllerProps} from 'react-hook-form';
-import {Checkbox} from '@/components/ui/checkBox';
-import {CheckboxProps} from '@radix-ui/react-checkbox';
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-type Props<T extends FieldValues> = UseControllerProps<T> & Omit<CheckboxProps, 'checked' | 'onCheckedChange'> & {
-    label?: string}
+import { Checkbox } from '@/components/ui/checkBox'
+import { CheckboxProps } from '@radix-ui/react-checkbox'
+
+type Props<T extends FieldValues> = UseControllerProps<T> &
+  Omit<CheckboxProps, 'checked' | 'onCheckedChange'> & {
+    label?: string
+  }
 
 export const ControlledCheckbox = <T extends FieldValues>({
-                                                              control,
-                                                              name,
-                                                              shouldUnregister,
-                                                              disabled,
-                                                              ...rest
-                                                          }: Props<T>) => {
-    const {
-        field: {value, onChange, ref, onBlur},
-    } = useController({
-        name,
-        control,
-        shouldUnregister,
-        disabled
-    })
+  control,
+  disabled,
+  name,
+  shouldUnregister,
+  ...rest
+}: Props<T>) => {
+  const {
+    field: { onBlur, onChange, ref, value },
+  } = useController({
+    control,
+    disabled,
+    name,
+    shouldUnregister,
+  })
 
-    // @ts-ignore
-    return <Checkbox
-        checked={value}
-        onCheckedChange={onChange}
-        ref={ref}
-        disabled={disabled}
-        onBlur={onBlur}
-        {...rest}
+  return (
+    <Checkbox
+      checked={value}
+      disabled={disabled}
+      onBlur={onBlur}
+      onChange={onChange}
+      ref={ref}
+      {...rest}
     />
-};
-
+  )
+}

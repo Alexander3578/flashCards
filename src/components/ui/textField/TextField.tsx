@@ -82,7 +82,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
           )}
         </div>
         {errorMessage && (
-          <Typography className={classNames.span} colorTheme={'danger'} as={'div'}>
+          <Typography as={'div'} className={classNames.span} colorTheme={'danger'}>
             {errorMessage}
           </Typography>
         )}
