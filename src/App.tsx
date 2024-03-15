@@ -1,6 +1,14 @@
 import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Button } from '@/components/ui/button'
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table'
+import { CustomSlider } from '@/components/ui/slider'
+import {
+  Table,
+  TableBody,
+  TableBodyCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/table'
 import { CustomTabs, TabsContent } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
 
@@ -9,7 +17,7 @@ export function App() {
     <div>
       <Button>Hello</Button>
       <Button as={'a'}>Hello</Button>
-      <Typography as={'a'} colorBalance={500} colorTheme={'danger'} variant={'link2'}>
+      <Typography as={'a'} colorBalance={100} colorTheme={'light'} variant={'link2'}>
         Hi
       </Typography>
       <CustomTabs
@@ -28,41 +36,42 @@ export function App() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableHeadCell>
                 <Typography variant={'subtitle2'}>Name</Typography>
-              </TableCell>
-              <TableCell>
+              </TableHeadCell>
+              <TableHeadCell>
                 <Typography variant={'subtitle2'}>Name</Typography>
-              </TableCell>
-              <TableCell>
+              </TableHeadCell>
+              <TableHeadCell>
                 <Typography variant={'subtitle2'}>Name</Typography>
-              </TableCell>
-              <TableCell>
+              </TableHeadCell>
+              <TableHeadCell>
                 <Typography variant={'subtitle2'}>Name</Typography>
-              </TableCell>
-              <TableCell>
+              </TableHeadCell>
+              <TableHeadCell>
                 <Typography variant={'subtitle2'}>Name</Typography>
-              </TableCell>
-              <TableCell>
+              </TableHeadCell>
+              <TableHeadCell>
                 <Typography variant={'subtitle2'}>Name</Typography>
-              </TableCell>
+              </TableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>
+              <TableBodyCell>
                 <Typography variant={'body2'}>ACSSSSSSSSSSSSSSSSSSSSSSSSSName</Typography>
-              </TableCell>
-              <TableCell>
+              </TableBodyCell>
+              <TableBodyCell>
                 <Typography variant={'body2'}>Name</Typography>
-              </TableCell>
-              <TableCell>
+              </TableBodyCell>
+              <TableBodyCell>
                 <Typography variant={'body2'}>Name</Typography>
-              </TableCell>
+              </TableBodyCell>
             </TableRow>
           </TableBody>
         </Table>
       </CustomTabs>
+      <CustomSlider max={10} min={1} />
     </div>
   )
 }
