@@ -12,6 +12,13 @@ import {
 import { CustomTabs, TabsContent } from '@/components/ui/tabs'
 import { Typography } from '@/components/ui/typography'
 
+// export function App() {
+//   return (
+//     <Provider store={store}>
+//       <Router />
+//     </Provider>
+//   )
+// }
 export function App() {
   return (
     <div>
