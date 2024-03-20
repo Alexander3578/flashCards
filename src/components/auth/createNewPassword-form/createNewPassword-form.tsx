@@ -32,6 +32,7 @@ export const CreateNewPasswordForm = () => {
         <Typography as={'h1'} className={s.formTitle} variant={'h1'}>
           Create new password
         </Typography>
+
         <ControlledTextField
           className={s.formInput}
           control={control}
@@ -41,11 +42,12 @@ export const CreateNewPasswordForm = () => {
           name={'password'}
           type={'password'}
         />
+
         <Typography as={'p'} className={s.formDescription} colorBalance={900} variant={'body2'}>
           Create new password and we will send you further instructions to email
         </Typography>
 
-        <Button isFullWidth>
+        <Button isFullWidth type={'submit'}>
           <Typography variant={'subtitle2'}>Create New Password</Typography>
         </Button>
       </form>

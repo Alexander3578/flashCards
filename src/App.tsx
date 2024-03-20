@@ -1,4 +1,5 @@
 import { CreateNewPasswordForm } from '@/components/auth/createNewPassword-form/createNewPassword-form'
+import { EditableForm } from '@/components/auth/editable-form'
 import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Button } from '@/components/ui/button'
 import { CustomSlider } from '@/components/ui/slider'
@@ -81,6 +82,7 @@ export function App() {
       </CustomTabs>
       <CustomSlider max={10} min={1} />
       <CreateNewPasswordForm />
+      <EditableForm />
     </div>
   )
 }

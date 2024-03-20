@@ -1,0 +1,41 @@
+.container {
+  max-width: 420px;
+  padding: 33px 92px 41px 80px;
+  margin: 0 auto;
+}
+
+.isEditableContainer {
+  padding: 33px 36px 84px;
+}
+
+.formTitle {
+  margin-top: 0;
+  margin-bottom: 27px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.avatar {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.isEditableAvatar {
+
+}
+
+.formInputWrapper {
+  margin-top: 12px;
+  margin-bottom: 36px;
+}
+
+.isEditableFormInput {
+  width: 100%;
+}
+
+.formButton {
+  margin: 0 auto;
+}

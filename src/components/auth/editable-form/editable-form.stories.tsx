@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CreateNewPasswordForm } from '@/components/auth/createNewPassword-form/createNewPassword-form'
+import { EditableForm } from '@/components/auth/editable-form/editable-form'
 
 const meta = {
   argTypes: {},
-  component: CreateNewPasswordForm,
+  component: EditableForm,
   tags: ['autodocs'],
   title: 'Components/EditableForm',
-} satisfies Meta<typeof CreateNewPasswordForm>
+} satisfies Meta<typeof EditableForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
