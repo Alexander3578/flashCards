@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef, ElementRef, ElementType, ReactNode, forwardRef } from 'react'
 
+import clsx from 'clsx'
+
 import s from './typography.module.scss'
 
 type ColorTheme = 'accent' | 'danger' | 'dark' | 'info' | 'light' | 'success' | 'warning'
@@ -38,14 +40,10 @@ export const Typography = forwardRef<ElementRef<ElementType>, TypographyProps<El
     },
     ref
   ) => {
+    const classNames = clsx(s.default, className, s[variant], s[`${colorTheme}-${colorBalance}`])
+
     return (
-      <Component
-        className={`${s.default} ${className ?? ''} ${s[variant]} ${
-          s[`${colorTheme}-${colorBalance}`]
-        }`}
-        ref={ref}
-        {...restProps}
-      >
+      <Component className={classNames} ref={ref} {...restProps}>
         {children}
       </Component>
     )

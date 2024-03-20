@@ -13,7 +13,7 @@ export const ControlledTextField = <T extends FieldValues>({
   ...rest
 }: Props<T>) => {
   const {
-    field: { onBlur, onChange, ref, value },
+    field: { onBlur, onChange, ref, value = '' },
   } = useController({
     control,
     disabled,
@@ -24,7 +24,7 @@ export const ControlledTextField = <T extends FieldValues>({
   return (
     <TextField
       disabled={disabled}
-      name={name}
+      id={name}
       onBlur={onBlur}
       onChange={onChange}
       ref={ref}

@@ -1,3 +1,4 @@
+import { CreateNewPasswordForm } from '@/components/auth/createNewPassword-form/createNewPassword-form'
 import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Button } from '@/components/ui/button'
 import { CustomSlider } from '@/components/ui/slider'
@@ -24,7 +25,7 @@ export function App() {
     <div>
       <Button>Hello</Button>
       <Button as={'a'}>Hello</Button>
-      <Typography as={'a'} colorBalance={100} colorTheme={'light'} variant={'link2'}>
+      <Typography as={'a'} colorBalance={100} colorTheme={'danger'} variant={'link2'}>
         Hi
       </Typography>
       <CustomTabs
@@ -79,6 +80,7 @@ export function App() {
         </Table>
       </CustomTabs>
       <CustomSlider max={10} min={1} />
+      <CreateNewPasswordForm />
     </div>
   )
 }
