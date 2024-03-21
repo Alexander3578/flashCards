@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import avatar from '@/assets/Ellipse 45.png'
-import { Button } from '@/components/ui/button'
+import { IsCompletedPart } from '@/components/auth/editable-form/isCompletedPart'
+import { IsEditablePart } from '@/components/auth/editable-form/isEditabledPart'
 import { Card } from '@/components/ui/card'
-import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -13,14 +12,18 @@ import { z } from 'zod'
 import s from './editable-form.module.scss'
 
 const loginSchema = z.object({
-  nickname: z.string().min(1),
+  nickname: z.string().min(1).max(50),
 })
 
 export type FormValues = z.infer<typeof loginSchema>
 
-export const EditableForm = () => {
-  const [isEditable, setIsEditable] = useState(true)
-  const [currentName, setCurrentName] = useState('')
+type EditableFormProps = {
+  profileName?: string
+}
+
+export const EditableForm = ({ profileName }: EditableFormProps) => {
+  const [isEditable, setIsEditable] = useState(false)
+  const [currentName, setCurrentName] = useState(profileName || 'Edit Name')
 
   const {
     control,
@@ -34,6 +37,8 @@ export const EditableForm = () => {
     setIsEditable(false)
   }
 
+  const email = 'j&johnson@gmail.com'
+
   const containerStyle = clsx(isEditable ? s.isEditableContainer : '', s.container)
 
   return (
@@ -44,30 +49,13 @@ export const EditableForm = () => {
         </Typography>
 
         {isEditable ? (
-          <>
-            <img alt={'avatar'} className={s.avatar} src={avatar} />
-            <div className={s.formInputWrapper}>
-              <ControlledTextField
-                className={s.isEditableFormInput}
-                control={control}
-                defaultValue={currentName}
-                errorMessage={errors.nickname?.message}
-                label={'Nickname'}
-                name={'nickname'}
-                type={'text'}
-              />
-            </div>
-            <Button isFullWidth>
-              <Typography variant={'subtitle2'}>Save Changes</Typography>
-            </Button>
-          </>
+          <IsEditablePart
+            control={control}
+            currentName={currentName}
+            errorMessage={errors.nickname?.message}
+          />
         ) : (
-          <div>
-            <img alt={'avatar'} className={s.avatar} src={avatar} />
-            <Button className={s.formButton} isImg variant={'secondary'}>
-              <Typography variant={'subtitle2'}>Logout</Typography>
-            </Button>
-          </div>
+          <IsCompletedPart currentName={currentName} email={email} setIsEditable={setIsEditable} />
         )}
       </form>
     </Card>
