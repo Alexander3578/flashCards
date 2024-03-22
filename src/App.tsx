@@ -1,5 +1,6 @@
-import { CreateNewPasswordForm } from '@/components/auth/createNewPassword-form/createNewPassword-form'
 import { EditableForm } from '@/components/auth/editable-form'
+import { BackToEmail } from '@/components/auth/forgorPassword/backToEmail'
+import { CreateNewPasswordForm } from '@/components/auth/forgorPassword/createNewPassword-form/createNewPassword-form'
 import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Button } from '@/components/ui/button'
 import { CustomSlider } from '@/components/ui/slider'
@@ -83,6 +84,7 @@ export function App() {
       <CustomSlider max={10} min={1} />
       <CreateNewPasswordForm />
       <EditableForm />
+      <BackToEmail />
     </div>
   )
 }
