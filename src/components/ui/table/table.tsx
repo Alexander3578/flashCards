@@ -40,7 +40,7 @@ export type TableRowProps = ComponentPropsWithoutRef<'tr'>
 export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
   (props: TableRowProps, ref) => {
     const { className, ...restProps } = props
-    const classNames = clsx(className ?? '')
+    const classNames = clsx(s.tableRow, className ?? '')
 
     return <tr className={classNames} {...restProps} ref={ref} />
   }
@@ -62,7 +62,8 @@ export type TableBodyCellProps = ComponentPropsWithoutRef<'td'>
 export const TableBodyCell = forwardRef<HTMLTableCellElement, TableBodyCellProps>(
   (props: TableBodyCellProps, ref) => {
     const { className, ...restProps } = props
+    const classNames = clsx(`${s.tableBodyCell} ${className ?? ''}`)
 
-    return <td className={`${s.tableBodyCell} ${className ?? ''}`} {...restProps} ref={ref} />
+    return <td className={classNames} {...restProps} ref={ref} />
   }
 )

@@ -1,4 +1,5 @@
 import iconSprite from '../../../assets/IconSprite.svg'
+
 interface IconPropsType {
   height?: string
   iconId: string

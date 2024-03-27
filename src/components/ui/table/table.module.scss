@@ -1,12 +1,16 @@
 .table{
   border-collapse: collapse;
   border: 1px solid var(--color-dark-500);
-  max-width: fit-content;
+  max-width: 100%;
 }
 
 .tableHead{
   height: 36px;
   background-color: var(--color-dark-500);
+}
+
+.tableRow{
+  height: 36px;
 }
 
 .tableHeadCell{
@@ -16,4 +20,6 @@
 
 .tableBodyCell{
   padding: 6px 24px;
+  height: fit-content;
+  border-bottom: 1px solid var(--color-dark-500);
 }
