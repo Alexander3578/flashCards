@@ -48,7 +48,7 @@ export type DeleteDeckResponse = Omit<DecksItems, 'author'>
 
 export type UpdateDeckArgs = Partial<CreateDeckArgs> & DeleteDeckArgs
 
-type OrderBy =
+export type OrderBy =
   | 'author.name-asc'
   | 'author.name-desc'
   | 'cardsCount-asc'
