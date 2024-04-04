@@ -1,17 +1,14 @@
-import { DecksList } from '@/features/decksList/ui/decks/decks'
+import { Header } from '@/features/header'
+import { Router } from '@/router'
 
-// export function App() {
-//   return (
-//     <Provider store={store}>
-//       <Router />
-//     </Provider>
-//   )
-// }
 export function App() {
   return (
-    <div>
-      <DecksList />
-    </div>
+    <>
+      <Header />
+      <main>
+        <Router />
+      </main>
+    </>
     // <div>
     //   <Button>Hello</Button>
     //   <Button as={'a'}>Hello</Button>

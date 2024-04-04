@@ -1,1 +1,1 @@
-rsc
+export * from './decks'

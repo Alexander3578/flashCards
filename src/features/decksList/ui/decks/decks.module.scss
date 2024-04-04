@@ -26,6 +26,17 @@
   margin-bottom: 24px;
 }
 
+.deckTableNameCellWrapper{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.deckTableNameImg{
+  max-width: 118px;
+  max-height: 48px;
+}
+
 .deckButtonsWrapper{
   width: auto;
   height: fit-content;

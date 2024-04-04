@@ -17,13 +17,22 @@ type SliderDemoProps = {
 
 export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDemoProps>(
   (props: SliderDemoProps, ref) => {
-    const { className, defaultValue, max, min, onValueChange, sliderName, step, ...restProps } =
-      props
+    const {
+      className,
+      defaultValue,
+      max,
+      min,
+      onValueChange,
+      sliderName,
+      step,
+      value,
+      ...restProps
+    } = props
 
-    const [value, setValue] = useState<number[]>(defaultValue || [min, max])
+    const [currentValue, setCurrentValue] = useState([min, max])
 
     const handleValueChange = (values: number[]) => {
-      setValue(values)
+      setCurrentValue(values)
       if (onValueChange) {
         onValueChange(values)
       }
@@ -37,7 +46,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
           </Typography>
         )}
         <div className={s.customSliderWrapper}>
-          <MinMax minMax={value[0]} />
+          <MinMax minMax={currentValue[0]} />
           <div className={s.sliderWrapper}>
             <Slider.Root
               className={s.sliderRoot}
@@ -46,7 +55,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
               min={min}
               onValueChange={handleValueChange}
               step={step || 1}
-              value={value}
+              value={currentValue}
               {...restProps}
               ref={ref}
             >
@@ -57,7 +66,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
               <Slider.Thumb className={s.sliderThumb} />
             </Slider.Root>
           </div>
-          <MinMax minMax={value[1]} />
+          <MinMax minMax={currentValue[1]} />
         </div>
       </div>
     )

@@ -6,19 +6,33 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { LoginForm } from '@/components/auth/login-form/login-form'
+import { DecksList } from '@/features/decksList/ui/decks'
+import { LearnDeck } from '@/features/learnDeck'
+
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    element: <LoginForm />,
     path: '/login',
   },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <div>hello</div>,
+    element: <DecksList />,
     path: '/',
   },
+  {
+    element: <LearnDeck />,
+    path: '/learn/:deckId',
+  },
 ]
+
+function PrivateRoutes() {
+  const isAuthenticated = true
+
+  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
+}
 
 const router = createBrowserRouter([
   {
@@ -30,10 +44,4 @@ const router = createBrowserRouter([
 
 export const Router = () => {
   return <RouterProvider router={router} />
-}
-
-function PrivateRoutes() {
-  const isAuthenticated = true
-
-  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }
