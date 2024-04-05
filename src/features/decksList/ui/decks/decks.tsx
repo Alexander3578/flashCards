@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Pagination } from '@/components/ui/pagination'
 import { OrderBy, useGetDecksQuery, useGetMinMaxCardsQuery } from '@/features/decksList/api'
+import { decksListActions } from '@/features/decksList/model/decksList/decksSlice'
 import { DecksFilters } from '@/features/decksList/ui/decks/decksFiltres/decksFiltres'
 import { DecksTable } from '@/features/decksList/ui/decks/decksTable/decksTable'
 
@@ -12,8 +14,17 @@ import { DecksTitleAddDeck } from './decksTitle-addDeck/decksTitle-addDeck'
 export const DecksList = () => {
   const [decksParams, setDecksParams] = useSearchParams()
 
-  const { data: minMaxCards, isLoading: isMinMaxLoading } = useGetMinMaxCardsQuery()
-  const { data, isLoading: isDataLoading } = useGetDecksQuery({
+  const {
+    data: minMaxCards,
+    isLoading: isMinMaxLoading,
+    isSuccess: isMinMaxSuccess,
+  } = useGetMinMaxCardsQuery()
+
+  const {
+    data,
+    isLoading: isDataLoading,
+    isSuccess: isDataSuccess,
+  } = useGetDecksQuery({
     currentPage: Number(decksParams.get('page')) || 1,
     itemsPerPage: decksParams.get('items') || '10',
     maxCardsCount: Number(decksParams.get('maxCards')) || minMaxCards?.max,
@@ -48,7 +59,7 @@ export const DecksList = () => {
     updateSearchParams({ items: pageItems })
   }
 
-  const onChangeSortPerData = (sortData: 'asc' | 'desc') => {
+  const onChangeSortPerDate = (sortData: 'asc' | 'desc') => {
     updateSearchParams({ orderBy: `updated-${sortData}` })
   }
 
@@ -71,11 +82,22 @@ export const DecksList = () => {
     })
   }
 
-  const isInitialized =
+  useEffect(() => {
+    if (minMaxCards?.max && minMaxCards?.min) {
+      decksListActions.setMaxCardsCount({ max: minMaxCards.max })
+      decksListActions.setMinCardsCount({ min: minMaxCards.min })
+    }
+  }, [minMaxCards])
+
+  const isSuccess =
     !!data && minMaxCards && minMaxCards.min !== undefined && minMaxCards.max !== undefined
 
-  return (
-    isInitialized && (
+  const isLoading = isDataLoading && isMinMaxLoading
+
+  return isLoading ? (
+    <div>Loading</div>
+  ) : (
+    isSuccess && (
       <div className={s.container}>
         <DecksTitleAddDeck />
         <DecksFilters
@@ -86,7 +108,7 @@ export const DecksList = () => {
           onSliderValueChange={onSliderValueChange}
           valueName={decksParams.get('name') || ''}
         />
-        <DecksTable data={data} onChangeSortPerData={onChangeSortPerData} />
+        <DecksTable data={data} onChangeSortPerData={onChangeSortPerDate} />
 
         <Pagination
           count={data.pagination.totalPages}

@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
 
 import { App } from '@/App'
+// eslint-disable-next-line import/namespace
 import { store } from '@/services/store'
 import { createRoot } from 'react-dom/client'
 

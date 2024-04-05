@@ -44,7 +44,7 @@ export const DecksFilters = (props: DecksFiltresProps) => {
 
     setSearchName(e.currentTarget.value)
     timerId.current = window.setTimeout(() => {
-      onSetSearchNameHandler(searchName)
+      onSetSearchNameHandler(e.target.value)
     }, 300)
   }
 
