@@ -29,7 +29,7 @@ export const DecksFilters = (props: DecksFiltresProps) => {
     valueName,
   } = props
 
-  const isClearSlider = useAppSelector(isClearSelector)
+  const isClear = useAppSelector(isClearSelector)
   const dispatch = useAppDispatch()
 
   const [currentSliderValue, setCurrentSliderValue] = useState([minCardsCount, maxCardsCount])
@@ -63,14 +63,14 @@ export const DecksFilters = (props: DecksFiltresProps) => {
   }, [])
 
   useEffect(() => {
-    if (isClearSlider) {
+    if (isClear) {
       const timer = setTimeout(() => {
         dispatch(decksListActions.setClearFilters({ isClear: false }))
       }, 0)
 
       return () => clearTimeout(timer)
     }
-  }, [isClearSlider, dispatch])
+  }, [isClear, dispatch])
 
   return (
     <div className={s.filterDecksWrapper}>

@@ -1,9 +1,8 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useEffect, useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from '@/common/hooks/hooks'
+import { useAppSelector } from '@/common/hooks/hooks'
 import { Typography } from '@/components/ui/typography'
 import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
-import { decksListActions } from '@/features/decksList/model/decksList/decksSlice'
 import * as Slider from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
