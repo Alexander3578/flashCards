@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, useEffect, useState } from 'react'
 
 import { Icon } from '@/components/ui/Icon'
 import clsx from 'clsx'
@@ -68,9 +68,12 @@ export const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps
     const [sort, setSort] = useState<'asc' | 'desc'>(sortName)
 
     const changeSortHandler = () => {
-      onChangeSort?.(sort)
       setSort(sort === 'desc' ? 'asc' : 'desc')
     }
+
+    useEffect(() => {
+      onChangeSort?.(sort)
+    }, [sort])
 
     return (
       <th className={classNames} {...restProps} ref={ref}>

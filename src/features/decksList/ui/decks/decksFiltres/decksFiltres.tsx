@@ -1,9 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 
+import { useAppDispatch, useAppSelector } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { CustomSlider } from '@/components/ui/slider'
 import { CustomTabs } from '@/components/ui/tabs'
 import { TextField } from '@/components/ui/textField'
+import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
+import { decksListActions } from '@/features/decksList/model/decksList/decksSlice'
 
 import s from '@/features/decksList/ui/decks/decks.module.scss'
 
@@ -25,6 +28,9 @@ export const DecksFilters = (props: DecksFiltresProps) => {
     onSliderValueChange,
     valueName,
   } = props
+
+  const isClearSlider = useAppSelector(isClearSelector)
+  const dispatch = useAppDispatch()
 
   const [currentSliderValue, setCurrentSliderValue] = useState([minCardsCount, maxCardsCount])
   const [searchName, setSearchName] = useState(valueName)
@@ -56,6 +62,16 @@ export const DecksFilters = (props: DecksFiltresProps) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (isClearSlider) {
+      const timer = setTimeout(() => {
+        dispatch(decksListActions.setClearFilters({ isClear: false }))
+      }, 0)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isClearSlider, dispatch])
+
   return (
     <div className={s.filterDecksWrapper}>
       <TextField
@@ -78,6 +94,7 @@ export const DecksFilters = (props: DecksFiltresProps) => {
         tabsName={'Show decks cards'}
       />
       <CustomSlider
+        defaultValue={[minCardsCount, maxCardsCount]}
         max={currentSliderValue[1]}
         min={currentSliderValue[0]}
         onValueChange={onSliderValueChange}

@@ -23,7 +23,7 @@ type EditableFormProps = {
 
 export const EditableForm = ({ profileName }: EditableFormProps) => {
   const [isEditable, setIsEditable] = useState(false)
-  const [currentName, setCurrentName] = useState(profileName || 'Name')
+  const [currentName, setCurrentName] = useState(profileName || 'Edit Name')
 
   const {
     control,

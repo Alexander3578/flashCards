@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Pagination } from '@/components/ui/pagination'
 import { OrderBy, useGetDecksQuery, useGetMinMaxCardsQuery } from '@/features/decksList/api'
 import { decksListActions } from '@/features/decksList/model/decksList/decksSlice'
@@ -12,6 +12,8 @@ import s from './decks.module.scss'
 import { DecksTitleAddDeck } from './decksTitle-addDeck/decksTitle-addDeck'
 
 export const DecksList = () => {
+  const dispatch = useAppDispatch()
+
   const [decksParams, setDecksParams] = useSearchParams()
 
   const {
@@ -60,6 +62,8 @@ export const DecksList = () => {
   }
 
   const onChangeSortPerDate = (sortData: 'asc' | 'desc') => {
+    debugger
+    console.log(sortData)
     updateSearchParams({ orderBy: `updated-${sortData}` })
   }
 
@@ -80,14 +84,8 @@ export const DecksList = () => {
       orderBy: '',
       page: '1',
     })
+    dispatch(decksListActions.setClearFilters({ isClear: true }))
   }
-
-  useEffect(() => {
-    if (minMaxCards?.max && minMaxCards?.min) {
-      decksListActions.setMaxCardsCount({ max: minMaxCards.max })
-      decksListActions.setMinCardsCount({ min: minMaxCards.min })
-    }
-  }, [minMaxCards])
 
   const isSuccess =
     !!data && minMaxCards && minMaxCards.min !== undefined && minMaxCards.max !== undefined
