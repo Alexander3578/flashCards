@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
 import { ChevronDownIcon } from '@radix-ui/react-icons'
-import { Label } from '@radix-ui/react-label'
 import * as RadixSelect from '@radix-ui/react-select'
+import { Label } from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 

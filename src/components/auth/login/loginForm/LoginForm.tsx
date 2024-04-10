@@ -1,10 +1,12 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
+import { useLoginMutation } from '@/features/auth/api/auth-api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -19,17 +21,26 @@ const loginSchema = z.object({
 
 type FormValues = z.infer<typeof loginSchema>
 
+const initialFormValues = {
+  email: '',
+  password: '',
+  rememberMe: false,
+}
+
 export const LoginForm = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<FormValues>({
+    defaultValues: initialFormValues,
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+  const [signIn, {}] = useLoginMutation()
+
+  const onSubmit = async (data: FormValues) => {
+    await signIn(data)
   }
 
   return (
@@ -61,7 +72,9 @@ export const LoginForm = () => {
         </Button>
       </form>
       <Typography variant={'body2'}>Don&apos;t have an account?</Typography>
-      <a className={s.link}>Sign Up</a>
+      <Link className={s.link} to={'/login/registration'}>
+        Sign Up
+      </Link>
     </Card>
   )
 }

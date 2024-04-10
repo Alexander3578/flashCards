@@ -1,4 +1,4 @@
-export type ResponseGetMe = {
+export type User = {
   avatar: null | string
   created: string
   email: string
@@ -16,4 +16,13 @@ export type LoginArgs = {
 
 export type ResponseLogin = {
   accessToken: string
+}
+
+export type SignUpArgs = {
+  email: string
+  html?: string
+  name?: string
+  password: string
+  sendConfirmationEmail: boolean
+  subject?: string
 }

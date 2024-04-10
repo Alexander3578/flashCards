@@ -1,9 +1,11 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
+import { useSignUpMutation } from '@/features/auth/api/auth-api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -32,7 +34,9 @@ export const CreateLoginForm = () => {
     resolver: zodResolver(createLoginSchema),
   })
 
-  const onSubmit = (data: FormValues) => {
+  const [signUp, {}] = useSignUpMutation()
+
+  const onSubmit = async (data: FormValues) => {
     console.log(data)
   }
 
@@ -72,7 +76,9 @@ export const CreateLoginForm = () => {
         </Button>
       </form>
       <Typography variant={'body2'}>Already have an account?</Typography>
-      <a className={s.link}>Sign In</a>
+      <Link className={s.link} to={'/login'}>
+        Sign In
+      </Link>
     </Card>
   )
 }
