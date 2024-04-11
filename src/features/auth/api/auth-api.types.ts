@@ -23,6 +23,6 @@ export type SignUpArgs = {
   html?: string
   name?: string
   password: string
-  sendConfirmationEmail: boolean
+  sendConfirmationEmail?: boolean
   subject?: string
 }

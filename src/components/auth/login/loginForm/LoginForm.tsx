@@ -40,7 +40,11 @@ export const LoginForm = () => {
   const [signIn, {}] = useLoginMutation()
 
   const onSubmit = async (data: FormValues) => {
-    await signIn(data)
+    try {
+      await signIn(data).unwrap()
+    } catch (error: any) {
+      console.log(error)
+    }
   }
 
   return (

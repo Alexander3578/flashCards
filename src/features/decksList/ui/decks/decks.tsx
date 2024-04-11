@@ -22,6 +22,7 @@ export const DecksList = () => {
     isSuccess: isMinMaxSuccess,
   } = useGetMinMaxCardsQuery()
 
+  console.log(minMaxCards)
   const {
     data,
     isLoading: isDataLoading,
