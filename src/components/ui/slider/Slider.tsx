@@ -56,7 +56,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
       return ensureArray(savedValues, [min, max])
     })
 
-    const handleValueChange = (values: number[]) => {
+    const handleValueChange = (values: [number, number]) => {
       setCurrentValue(values)
       localStorage.setItem('sliderValues', JSON.stringify(values))
       if (onValueChange) {
@@ -69,7 +69,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
         setCurrentValue([min, max])
         localStorage.setItem('sliderValues', JSON.stringify([min, max]))
       }
-    }, [isClearSlider])
+    }, [isClearSlider, max, min])
 
     return (
       <div className={className ?? ''}>

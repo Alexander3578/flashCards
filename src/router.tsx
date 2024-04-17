@@ -9,6 +9,7 @@ import {
 import { CreateLoginForm } from '@/components/auth/login/createLoginForm'
 import { LoginForm } from '@/components/auth/login/loginForm'
 import { useMeQuery } from '@/features/auth/api/auth-api'
+import { Cards } from '@/features/cards/ui/Cards'
 import { DecksList } from '@/features/decksList/ui/decks'
 import { LearnDeck } from '@/features/learnDeck'
 
@@ -31,6 +32,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <LearnDeck />,
     path: '/learn/:deckId',
+  },
+  {
+    element: <Cards />,
+    path: '/deck/:deckId',
   },
 ]
 

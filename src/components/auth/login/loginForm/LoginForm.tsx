@@ -76,9 +76,9 @@ export const LoginForm = () => {
         </Button>
       </form>
       <Typography variant={'body2'}>Don&apos;t have an account?</Typography>
-      <Link className={s.link} to={'/login/registration'}>
+      <Typography as={Link} className={s.link} to={'/login/registration'} variant={'link1'}>
         Sign Up
-      </Link>
+      </Typography>
     </Card>
   )
 }
