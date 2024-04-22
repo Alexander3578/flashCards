@@ -6,12 +6,12 @@ import { VariantModalContent } from '@/components/ui/modal/contentContainerModal
 import { Pagination } from '@/components/ui/pagination'
 import { TextField } from '@/components/ui/textField'
 import { useDeleteCardMutation, useGetCardsQuery } from '@/features/cards/api'
-import { CreationCard } from '@/features/cards/ui/creationEditionEntity/create/creationCard'
 import { DeckTable } from '@/features/cards/ui/deckTable/DeckTable'
 import { EmptyDeck } from '@/features/cards/ui/emptyDeck/EmptyDeck'
 import { LinkBackHome } from '@/features/cards/ui/linkBackHome/LinkBackHome'
 import { NameDeck } from '@/features/cards/ui/nameDeck/NameDeck'
 import { useCards } from '@/features/cards/ui/useCards'
+import { CreationCard } from '@/features/creationEditionEntity/create/creationCard'
 import { useGetDeckQuery } from '@/features/decksList/api'
 
 import s from './cards.module.scss'

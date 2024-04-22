@@ -6,12 +6,17 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { EditableForm } from '@/components/auth/editable-form'
+import { ForgotPasswordForm } from '@/components/auth/forgorPassword/forgotPassword-form'
 import { CreateLoginForm } from '@/components/auth/login/createLoginForm'
 import { LoginForm } from '@/components/auth/login/loginForm'
+import { PreLoader } from '@/components/ui/preLoader'
 import { useMeQuery } from '@/features/auth/api/auth-api'
 import { Cards } from '@/features/cards/ui/Cards'
 import { DecksList } from '@/features/decksList/ui/decks'
 import { LearnDeck } from '@/features/learnDeck'
+import { Layout } from '@/layout/Layout'
+import { Error404 } from '@/pages/error404'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -21,6 +26,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <CreateLoginForm />,
     path: '/login/registration',
+  },
+  {
+    element: <ForgotPasswordForm />,
+    path: '/login/forgot-password',
   },
 ]
 
@@ -37,14 +46,20 @@ const privateRoutes: RouteObject[] = [
     element: <Cards />,
     path: '/deck/:deckId',
   },
+  {
+    element: <EditableForm />,
+    path: '/profile',
+  },
 ]
 
 function PrivateRoutes() {
-  const { isError, isLoading } = useMeQuery()
+  const { isError, isLoading } = useMeQuery(undefined, {
+    refetchOnMountOrArgChange: 1, // in seconds
+  })
   const isAuthenticated = !isError && !isLoading
 
   if (isLoading) {
-    return <div>Loading</div>
+    return <PreLoader />
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
@@ -58,12 +73,22 @@ function PublicRoutes() {
 
 export const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      {
+        children: publicRoutes,
+        element: <PublicRoutes />,
+      },
+    ],
+    element: <Layout />,
+    path: '/',
   },
   {
-    children: publicRoutes,
-    element: <PublicRoutes />,
+    element: <Error404 />,
+    path: '*',
   },
 ])
 

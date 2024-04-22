@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
 import { ResponseGetCards } from '@/features/cards/api'
-import { UpdateCard } from '@/features/cards/ui/creationEditionEntity/update/udateCard/UpdateCard'
 import { Rating } from '@/features/cards/ui/rating/Rating'
+import { UpdateCard } from '@/features/creationEditionEntity/update/udateCard/UpdateCard'
 
 import s from '../cards.module.scss'
 

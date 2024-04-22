@@ -11,13 +11,30 @@ import {
   UpdateDeckArgs,
 } from './decksList-api.types'
 
+function buildDeckFormData(body: Partial<CreateDeckArgs>) {
+  const formData = new FormData()
+
+  if (body.cover) {
+    formData.append('cover', body.cover)
+  }
+  if (body.isPrivate) {
+    formData.append('isPrivate', `${body.isPrivate}`)
+  }
+  if (body.name) {
+    formData.append('name', body.name)
+  }
+
+  return formData
+}
+
 export const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       createDeck: builder.mutation<DecksItem, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: args => ({
-          body: args,
+          body: buildDeckFormData(args),
+          formData: buildDeckFormData(args),
           method: 'POST',
           url: '/v1/decks',
         }),
@@ -35,6 +52,10 @@ export const decksApi = baseApi.injectEndpoints({
           url: `/v1/decks/${id}`,
         }),
       }),
+      getDeckById: builder.query<DecksItem, DeckArgs>({
+        providesTags: ['Decks'],
+        query: ({ id }) => `/v1/decks/${id}`,
+      }),
       getDecks: builder.query<ResponseGetDecks, GetDecksArgs | void>({
         providesTags: ['Decks'],
         query: params => ({
@@ -49,7 +70,8 @@ export const decksApi = baseApi.injectEndpoints({
       updateDeck: builder.mutation<DecksItem, UpdateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: ({ id, ...args }) => ({
-          body: args,
+          body: buildDeckFormData(args),
+          formData: buildDeckFormData(args),
           method: 'PATCH',
           url: `/v1/decks/${id}`,
         }),
@@ -61,6 +83,7 @@ export const decksApi = baseApi.injectEndpoints({
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
+  useGetDeckByIdQuery,
   useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,

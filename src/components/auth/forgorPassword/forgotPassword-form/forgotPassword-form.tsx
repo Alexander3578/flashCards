@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -54,7 +55,9 @@ export const ForgotPasswordForm = () => {
       <Typography colorBalance={900} variant={'body2'}>
         Did you remember your password?
       </Typography>
-      <a className={s.link}>Try logging in</a>
+      <Typography as={Link} className={s.link} to={'/login'} variant={'link1'}>
+        Try logging in
+      </Typography>
     </Card>
   )
 }
