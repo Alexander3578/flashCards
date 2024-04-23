@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -37,11 +37,13 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   })
 
+  const navigate = useNavigate()
   const [signIn, {}] = useLoginMutation()
 
   const onSubmit = async (data: FormValues) => {
     try {
       await signIn(data).unwrap()
+      navigate('/')
     } catch (error: any) {
       console.log(error)
     }
