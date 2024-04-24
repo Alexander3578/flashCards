@@ -39,7 +39,7 @@ export const authApi = baseApi.injectEndpoints({
     }),
     me: builder.query<User, void>({
       providesTags: ['Me'],
-      query: () => '/v1/api/me',
+      query: () => '/v1/auth/me',
     }),
     resetPassword: builder.mutation<void, ResetPasswordArgs>({
       query: ({ token, ...body }) => ({

@@ -72,13 +72,13 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
             value={value}
           />
           {inputPassword && (
-            <button className={s.buttonEye} onClick={showPasswordHandler}>
+            <div className={s.buttonEye} onClick={showPasswordHandler}>
               {showPasword ? (
                 <Icon height={'20px'} iconId={'eyeOutlineOff'} width={'20px'} />
               ) : (
                 <Icon iconId={'eyeOutline'} />
               )}
-            </button>
+            </div>
           )}
         </div>
         {errorMessage && (
