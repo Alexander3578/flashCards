@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -7,6 +7,7 @@ import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkb
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { useLoginMutation } from '@/features/auth/api/auth-api'
+import { ErrorLoginResponse, ErrorResponse } from '@/features/auth/api/auth-api.types'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -32,20 +33,33 @@ export const LoginForm = () => {
     control,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm<FormValues>({
     defaultValues: initialFormValues,
     resolver: zodResolver(loginSchema),
   })
 
-  const navigate = useNavigate()
   const [signIn, {}] = useLoginMutation()
 
   const onSubmit = async (data: FormValues) => {
     try {
       await signIn(data).unwrap()
-      navigate('/')
-    } catch (error: any) {
-      console.log(error)
+    } catch (error: ErrorResponse<ErrorLoginResponse>) {
+      if (error.data) {
+        // Устанавливаем ошибку для соответствующего поля в форме
+        setError('email', {
+          message: error.data.message,
+          type: 'string',
+        })
+        setError('password', {
+          message: error.data.message,
+          type: 'server',
+        })
+      } else {
+        // Если сервер вернул ошибку без данных
+        // Обрабатываем общую ошибку запроса здесь
+        console.error('An error occurred:', error.message)
+      }
     }
   }
 
