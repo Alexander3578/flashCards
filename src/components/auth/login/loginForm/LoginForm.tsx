@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import { appActions } from '@/app/appSlice'
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
@@ -33,12 +35,12 @@ export const LoginForm = () => {
     control,
     formState: { errors },
     handleSubmit,
-    setError,
   } = useForm<FormValues>({
     defaultValues: initialFormValues,
     resolver: zodResolver(loginSchema),
   })
 
+  const dispatch = useAppDispatch()
   const [signIn, {}] = useLoginMutation()
 
   const onSubmit = async (data: FormValues) => {
@@ -46,18 +48,8 @@ export const LoginForm = () => {
       await signIn(data).unwrap()
     } catch (error: ErrorResponse<ErrorLoginResponse>) {
       if (error.data) {
-        // Устанавливаем ошибку для соответствующего поля в форме
-        setError('email', {
-          message: error.data.message,
-          type: 'string',
-        })
-        setError('password', {
-          message: error.data.message,
-          type: 'server',
-        })
+        dispatch(appActions.setAppError({ error: error.data.message }))
       } else {
-        // Если сервер вернул ошибку без данных
-        // Обрабатываем общую ошибку запроса здесь
         console.error('An error occurred:', error.message)
       }
     }
