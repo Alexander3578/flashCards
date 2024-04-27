@@ -48,7 +48,7 @@ export const UpdateDeck = ({ idDeck, isOpen, setIsOpen }: UpdateDeckProps) => {
         id: idDeck,
         isPrivate: dataFormValues.private,
         name: dataFormValues.name,
-      })
+      }).unwrap()
       if (!isError) {
         reset({ image: null, name: '', private: false })
         setIsOpen(false)

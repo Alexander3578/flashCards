@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu, DropdownItem, DropdownItemWithImg } from '@/components/ui/dropDownMenu'
 import { Typography } from '@/components/ui/typography'
 import { useLogoutMutation, useMeQuery } from '@/features/auth/api/auth-api'
+import { handleError } from '@/utils/handleError'
 
 import s from './header.module.scss'
 
@@ -15,18 +17,28 @@ const defaultPhoto =
   'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg'
 
 export const Header = ({}: HeaderProps) => {
-  const { data: meData, isLoading } = useMeQuery()
+  const dispatch = useAppDispatch()
+
   const [logout, {}] = useLogoutMutation()
+  const {
+    data: meData,
+    isError,
+    isLoading,
+  } = useMeQuery(undefined, {
+    refetchOnMountOrArgChange: 1, // in seconds
+  })
   const avatar = meData?.avatar ? meData?.avatar : defaultPhoto
   const navigate = useNavigate()
 
   const logoutHandler = async () => {
     try {
       await logout()
-
-      navigate('/login')
+        .unwrap()
+        .catch((err: unknown) => {
+          handleError(dispatch, err)
+        })
     } catch (err) {
-      console.error('Ошибка при logout:', err)
+      handleError(dispatch, err)
     }
   }
 
@@ -38,12 +50,12 @@ export const Header = ({}: HeaderProps) => {
     <header className={s.header}>
       <div className={s.container}>
         <img alt={'logo'} src={logo} />
-        {!meData ? (
+        {isError ? (
           <Button variant={'secondary'}>Sign In</Button>
         ) : (
           <div className={s.containerUserInformation}>
             <Typography className={s.name} variant={'subtitle1'}>
-              {meData.name}
+              {meData?.name}
             </Typography>
             <DropDownMenu
               trigger={
@@ -54,7 +66,7 @@ export const Header = ({}: HeaderProps) => {
             >
               <DropdownItemWithImg
                 className={s.dropdown}
-                email={meData.email}
+                email={meData?.email}
                 icon={
                   <img
                     alt={'photo user'}
@@ -62,7 +74,7 @@ export const Header = ({}: HeaderProps) => {
                     style={{ borderRadius: '50%', height: '36px', width: '36px' }}
                   />
                 }
-                name={meData.name}
+                name={meData?.name}
               />
               <Link className={s.link} to={'/profile'}>
                 <DropdownItem>
