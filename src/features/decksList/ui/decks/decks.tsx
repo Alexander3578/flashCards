@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
@@ -14,6 +15,7 @@ import {
 import { DecksFilters } from '@/features/decksList/ui/decks/decksFiltres/decksFiltres'
 import { DecksTable } from '@/features/decksList/ui/decks/decksTable/decksTable'
 import { useDescQueryParams } from '@/features/decksList/ui/decks/useDescQueryParams'
+import { handleError } from '@/utils/handleError'
 
 import s from './decks.module.scss'
 
@@ -23,6 +25,8 @@ export const DecksList = () => {
   const [isOpenCreateDeck, setIsOpenCreateDeck] = useState(false)
   const [isOpenDeleteDeck, setIsOpenDeleteDeck] = useState(false)
   const [currentIdDeck, setCurrentIdDeck] = useState('')
+
+  const dispatch = useAppDispatch()
 
   const { data: minMaxCards, isLoading: isMinMaxLoading } = useGetMinMaxCardsQuery()
   const {
@@ -68,13 +72,14 @@ export const DecksList = () => {
     setIsOpenDeleteDeck(true)
     setCurrentIdDeck(idDeck)
   }
+
   const onDeleteDeckHandler = async () => {
     try {
       await deleteDeck({
         id: currentIdDeck,
       })
     } catch (err) {
-      console.error('Ошибка при удалении дека:', err)
+      handleError(dispatch, err)
     }
   }
 

@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { PreLoader } from '@/components/ui/preLoader'
 import { Typography } from '@/components/ui/typography'
 import { useSendRecoveryEmailMutation } from '@/features/auth/api/auth-api'
+import { handleError } from '@/utils/handleError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -28,6 +30,8 @@ export const ForgotPasswordForm = () => {
     resolver: zodResolver(loginSchema),
   })
 
+  const dispatch = useAppDispatch()
+
   const navigate = useNavigate()
   const [sendRecoveryEmail, { isLoading }] = useSendRecoveryEmailMutation()
 
@@ -35,8 +39,8 @@ export const ForgotPasswordForm = () => {
     try {
       await sendRecoveryEmail(data).unwrap()
       navigate('/login/back-to-email')
-    } catch (error: any) {
-      console.log(error)
+    } catch (error: unknown) {
+      handleError(dispatch, error)
     }
   }
 

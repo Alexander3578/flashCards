@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { appActions } from '@/app/appSlice'
 import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -10,6 +9,7 @@ import { ControlledTextField } from '@/components/ui/controlled/controlled-textF
 import { Typography } from '@/components/ui/typography'
 import { useLoginMutation } from '@/features/auth/api/auth-api'
 import { ErrorLoginResponse, ErrorResponse } from '@/features/auth/api/auth-api.types'
+import { handleError } from '@/utils/handleError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -47,11 +47,7 @@ export const LoginForm = () => {
     try {
       await signIn(data).unwrap()
     } catch (error: ErrorResponse<ErrorLoginResponse>) {
-      if (error.data) {
-        dispatch(appActions.setAppError({ error: error.data.message }))
-      } else {
-        console.error('An error occurred:', error.message)
-      }
+      handleError(dispatch, error)
     }
   }
 

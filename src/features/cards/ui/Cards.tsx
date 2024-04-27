@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
+import { PreLoader } from '@/components/ui/preLoader'
 import { TextField } from '@/components/ui/textField'
+import { useMeQuery } from '@/features/auth/api/auth-api'
 import { useDeleteCardMutation, useGetCardsQuery } from '@/features/cards/api'
 import { DeckTable } from '@/features/cards/ui/deckTable/DeckTable'
 import { EmptyDeck } from '@/features/cards/ui/emptyDeck/EmptyDeck'
@@ -13,10 +16,13 @@ import { NameDeck } from '@/features/cards/ui/nameDeck/NameDeck'
 import { useCards } from '@/features/cards/ui/useCards'
 import { CreationCard } from '@/features/creationEditionEntity/create/creationCard'
 import { useGetDeckQuery } from '@/features/decksList/api'
+import { handleError } from '@/utils/handleError'
 
 import s from './cards.module.scss'
 
 export const Cards = () => {
+  const dispatch = useAppDispatch()
+
   const [isOpenCreateCard, setIsOpenCreateCard] = useState(false)
   const [isOpenDeleteCard, setIsOpenDeleteCard] = useState(false)
   const [currentIdCard, setCurrentIdCard] = useState('')
@@ -26,6 +32,7 @@ export const Cards = () => {
   const { data: deckData, isLoading: isLoadingGetDeck } = useGetDeckQuery({
     id: idDeck as string,
   })
+  const { data: me } = useMeQuery()
 
   const {
     answer,
@@ -60,21 +67,21 @@ export const Cards = () => {
         id: currentIdCard,
       })
     } catch (err) {
-      console.error('Ошибка при удалении карточки:', err)
+      handleError(dispatch, err)
     }
   }
 
-  const isOwner = true
+  const isOwner = deckData?.userId === me?.id
 
   if (isLoadingGetDeck || isLoadingGetCards) {
-    return <div>LOADING....</div>
+    return <PreLoader />
   }
 
   return (
     <div className={s.container}>
       <LinkBackHome />
       {data?.items.length === 0 ? (
-        <EmptyDeck id={idDeck} />
+        <EmptyDeck id={idDeck} isOwner={isOwner} />
       ) : (
         <>
           <CreationCard id={idDeck} isOpen={isOpenCreateCard} setIsOpen={setIsOpenCreateCard} />

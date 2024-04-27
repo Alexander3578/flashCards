@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { PreLoader } from '@/components/ui/preLoader'
 import { Typography } from '@/components/ui/typography'
 import { useResetPasswordMutation } from '@/features/auth/api/auth-api'
+import { handleError } from '@/utils/handleError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -25,6 +27,8 @@ export const CreateNewPasswordForm = () => {
     handleSubmit,
   } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
 
+  const dispatch = useAppDispatch()
+
   const navigate = useNavigate()
   const { token } = useParams()
 
@@ -34,8 +38,8 @@ export const CreateNewPasswordForm = () => {
     try {
       await resetPassword({ token, ...data }).unwrap()
       navigate('/login')
-    } catch (error: any) {
-      console.log(error)
+    } catch (error: unknown) {
+      handleError(dispatch, error)
     }
   }
 

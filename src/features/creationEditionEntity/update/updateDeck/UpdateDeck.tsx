@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { CreateEditDeck } from '@/features/creationEditionEntity/createEditDeck/CreateEditDeck'
 import { useGetDeckByIdQuery, useUpdateDeckMutation } from '@/features/decksList/api'
+import { handleError } from '@/utils/handleError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -13,12 +15,14 @@ export type UpdateDeckProps = {
 
 const UpdateDeckFormSchema = z.object({
   image: z.any().optional(),
-  name: z.string().min(3),
+  name: z.string().min(3).max(30),
   private: z.boolean().default(false),
 })
 
 export type UpdateDeckFormValues = z.infer<typeof UpdateDeckFormSchema>
 export const UpdateDeck = ({ idDeck, isOpen, setIsOpen }: UpdateDeckProps) => {
+  const dispatch = useAppDispatch()
+
   const { data } = useGetDeckByIdQuery({
     id: idDeck,
   })
@@ -50,7 +54,7 @@ export const UpdateDeck = ({ idDeck, isOpen, setIsOpen }: UpdateDeckProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      console.error('Ошибка при редактировании deck:', err)
+      handleError(dispatch, err)
     }
   }
 
