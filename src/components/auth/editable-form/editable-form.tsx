@@ -32,7 +32,6 @@ export const EditableForm = ({ profileName }: EditableFormProps) => {
   } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
 
   const onSubmit = (data: FormValues) => {
-    console.log(data)
     setCurrentName(data.nickname)
     setIsEditable(false)
   }
