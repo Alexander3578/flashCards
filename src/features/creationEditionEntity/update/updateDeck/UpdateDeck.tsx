@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useAppDispatch } from '@/common/hooks/hooks'
 import { CreateEditDeck } from '@/features/creationEditionEntity/createEditDeck/CreateEditDeck'
 import { useGetDeckByIdQuery, useUpdateDeckMutation } from '@/features/decksList/api'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -54,7 +54,7 @@ export const UpdateDeck = ({ idDeck, isOpen, setIsOpen }: UpdateDeckProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      handleError(dispatch, err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

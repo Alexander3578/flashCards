@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useAppDispatch } from '@/common/hooks/hooks'
 import { useCreateCardMutation } from '@/features/cards/api'
 import { CreateEditCard } from '@/features/creationEditionEntity/createEditCard/CreateEditCard'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -49,7 +49,7 @@ export const CreationCard = ({ id, isOpen, setIsOpen }: CreationCardProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      handleError(dispatch, err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

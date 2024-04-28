@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { DropDownMenu, DropdownItem, DropdownItemWithImg } from '@/components/ui/dropDownMenu'
 import { Typography } from '@/components/ui/typography'
 import { useLogoutMutation, useMeQuery } from '@/features/auth/api/auth-api'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 
 import s from './header.module.scss'
 
@@ -17,8 +17,6 @@ const defaultPhoto =
   'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg'
 
 export const Header = ({}: HeaderProps) => {
-  const dispatch = useAppDispatch()
-
   const [logout, {}] = useLogoutMutation()
   const {
     data: meData,
@@ -29,16 +27,15 @@ export const Header = ({}: HeaderProps) => {
   })
   const avatar = meData?.avatar ? meData?.avatar : defaultPhoto
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const logoutHandler = async () => {
     try {
-      await logout()
-        .unwrap()
-        .catch((err: unknown) => {
-          handleError(dispatch, err)
-        })
+      await logout().unwrap()
+
+      navigate('/login')
     } catch (err) {
-      handleError(dispatch, err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

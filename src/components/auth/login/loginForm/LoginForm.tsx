@@ -8,8 +8,7 @@ import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkb
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { useLoginMutation } from '@/features/auth/api/auth-api'
-import { ErrorLoginResponse, ErrorResponse } from '@/features/auth/api/auth-api.types'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -46,8 +45,8 @@ export const LoginForm = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       await signIn(data).unwrap()
-    } catch (error: ErrorResponse<ErrorLoginResponse>) {
-      handleError(dispatch, error)
+    } catch (error: unknown) {
+      handleServerNetworkError(dispatch, error)
     }
   }
 

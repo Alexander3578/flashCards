@@ -8,7 +8,7 @@ import { ControlledTextField } from '@/components/ui/controlled/controlled-textF
 import { PreLoader } from '@/components/ui/preLoader'
 import { Typography } from '@/components/ui/typography'
 import { useSendRecoveryEmailMutation } from '@/features/auth/api/auth-api'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -40,7 +40,7 @@ export const ForgotPasswordForm = () => {
       await sendRecoveryEmail(data).unwrap()
       navigate('/login/back-to-email')
     } catch (error: unknown) {
-      handleError(dispatch, error)
+      handleServerNetworkError(dispatch, error)
     }
   }
 

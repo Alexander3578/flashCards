@@ -15,7 +15,7 @@ import {
 import { DecksFilters } from '@/features/decksList/ui/decks/decksFiltres/decksFiltres'
 import { DecksTable } from '@/features/decksList/ui/decks/decksTable/decksTable'
 import { useDescQueryParams } from '@/features/decksList/ui/decks/useDescQueryParams'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 
 import s from './decks.module.scss'
 
@@ -79,7 +79,7 @@ export const DecksList = () => {
         id: currentIdDeck,
       })
     } catch (err) {
-      handleError(dispatch, err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

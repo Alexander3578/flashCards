@@ -42,15 +42,3 @@ export type ResetPasswordArgs = {
   password: string
   token: string | undefined
 }
-
-export type ErrorResponse<T> = {
-  data: T
-  status: number
-}
-
-export type ErrorLoginResponse = {
-  message: string
-  path: string
-  statusCode: number
-  timestamp: string
-}

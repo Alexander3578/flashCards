@@ -16,7 +16,7 @@ import { NameDeck } from '@/features/cards/ui/nameDeck/NameDeck'
 import { useCards } from '@/features/cards/ui/useCards'
 import { CreationCard } from '@/features/creationEditionEntity/create/creationCard'
 import { useGetDeckQuery } from '@/features/decksList/api'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 
 import s from './cards.module.scss'
 
@@ -67,7 +67,7 @@ export const Cards = () => {
         id: currentIdCard,
       })
     } catch (err) {
-      handleError(dispatch, err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

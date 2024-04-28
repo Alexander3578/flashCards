@@ -8,7 +8,7 @@ import { ControlledTextField } from '@/components/ui/controlled/controlled-textF
 import { PreLoader } from '@/components/ui/preLoader'
 import { Typography } from '@/components/ui/typography'
 import { useResetPasswordMutation } from '@/features/auth/api/auth-api'
-import { handleError } from '@/utils/handleError'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -39,7 +39,7 @@ export const CreateNewPasswordForm = () => {
       await resetPassword({ token, ...data }).unwrap()
       navigate('/login')
     } catch (error: unknown) {
-      handleError(dispatch, error)
+      handleServerNetworkError(dispatch, error)
     }
   }
 
