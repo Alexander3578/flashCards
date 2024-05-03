@@ -82,12 +82,7 @@ export const CreateLoginForm = () => {
           label={'Confirm Password'}
           name={'confirmPassword'}
         />
-        <div className={s.containerTypography}>
-          <Typography as={Link} to={'/login/forgot-password'} variant={'body2'}>
-            Forgot Password?
-          </Typography>
-        </div>
-        <Button isFullWidth type={'submit'}>
+        <Button className={s.signUpBtn} isFullWidth type={'submit'}>
           Sign Up
         </Button>
       </form>
